@@ -172,16 +172,16 @@ h2{font-family:"Fraunces",Georgia,serif;font-weight:650;margin:0;color:var(--ink
 
 /* ---------- slide 11: FAQ ---------- */
 .faqgrid{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:296px 296px;gap:32px}
-.faq{position:relative;text-align:left;cursor:pointer;padding:40px 44px;border-radius:36px;border:3px solid var(--line);background:#fff;
+.faq{position:relative;-webkit-appearance:none;appearance:none;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;text-align:left;cursor:pointer;padding:40px 44px;border-radius:36px;border:3px solid var(--line);background:#fff;
   box-shadow:0 10px 30px rgba(20,48,79,.10);display:flex;flex-direction:column;justify-content:center;touch-action:manipulation}
 .faq:focus-visible{outline:6px solid rgba(11,110,110,.45);outline-offset:4px}
 .faq .q{font-family:"Fraunces",Georgia,serif;font-size:52px;font-weight:650;line-height:1.1;padding-right:70px}
-.faq .a{display:none;font-size:42px;font-weight:600;line-height:1.2;color:#fff;padding-right:84px}
+.faq .a{display:none;font-size:34px;font-weight:600;line-height:1.2;color:#fff;padding-right:84px}
 .faq .tog{position:absolute;top:30px;right:30px;width:72px;height:72px;border-radius:50%;background:var(--teal-soft);color:var(--teal);display:flex;align-items:center;justify-content:center}
 .faq .tog .ico{width:42px;height:42px;stroke-width:6;transition:transform .2s}
 .faq.open{background:var(--teal);border-color:var(--teal)}
-.faq.open .q{display:none}
-.faq.open .a{display:block;animation:fadein .25s ease-out}
+.faq.open .q{font-size:36px;margin-bottom:14px;color:#fff}
+.faq.open .a{display:block;opacity:1;color:#fff;-webkit-text-fill-color:#fff}
 .faq.open .tog{background:rgba(255,255,255,.18);color:#fff}
 .faq.open .tog .ico{transform:rotate(45deg)}
 @keyframes fadein{from{opacity:0}to{opacity:1}}
@@ -468,12 +468,12 @@ h2{font-family:"Fraunces",Georgia,serif;font-weight:650;margin:0;color:var(--ink
  <div class="tag">Questions?</div>
  <h1 style="margin-bottom:30px">Tap a question.</h1>
  <div class="faqgrid">
-  <button class="faq" type="button" aria-expanded="false"><span class="q">Will it buy or send things on its own?</span><span class="a">No. You approve everything before it is sent or bought.</span><span class="tog"><svg class="ico"><use href="#i-plus"/></svg></span></button>
-  <button class="faq" type="button" aria-expanded="false"><span class="q">Do I need to be good with tech?</span><span class="a">No. Just talk in plain English, even by voice.</span><span class="tog"><svg class="ico"><use href="#i-plus"/></svg></span></button>
-  <button class="faq" type="button" aria-expanded="false"><span class="q">Who sets it all up?</span><span class="a">Setup is done for you.</span><span class="tog"><svg class="ico"><use href="#i-plus"/></svg></span></button>
-  <button class="faq" type="button" aria-expanded="false"><span class="q">Can I rename my agents?</span><span class="a">Yes. Rename them and customize them any way you like.</span><span class="tog"><svg class="ico"><use href="#i-plus"/></svg></span></button>
-  <button class="faq" type="button" aria-expanded="false"><span class="q">Can it help with scams?</span><span class="a">Yes. Max, the security agent, watches for scams.</span><span class="tog"><svg class="ico"><use href="#i-plus"/></svg></span></button>
-  <button class="faq" type="button" aria-expanded="false"><span class="q">What if I get stuck?</span><span class="a">Ask your agents. They can teach you, step by step.</span><span class="tog"><svg class="ico"><use href="#i-plus"/></svg></span></button>
+  <div class="faq" role="button" tabindex="0" aria-expanded="false"><span class="q">Will it buy or send things on its own?</span><span class="a">It's customized to the control you give it. Nothing goes out without your OK.</span><span class="tog"><svg class="ico"><use href="#i-plus"/></svg></span></div>
+  <div class="faq" role="button" tabindex="0" aria-expanded="false"><span class="q">Do I need to be good with tech?</span><span class="a">No. It's made for everyday people. Don't know AI? Ask AI to teach you.</span><span class="tog"><svg class="ico"><use href="#i-plus"/></svg></span></div>
+  <div class="faq" role="button" tabindex="0" aria-expanded="false"><span class="q">Who sets it all up?</span><span class="a">Setup is done for you.</span><span class="tog"><svg class="ico"><use href="#i-plus"/></svg></span></div>
+  <div class="faq" role="button" tabindex="0" aria-expanded="false"><span class="q">Can I rename my agents?</span><span class="a">Yes. Rename them and customize them any way you like.</span><span class="tog"><svg class="ico"><use href="#i-plus"/></svg></span></div>
+  <div class="faq" role="button" tabindex="0" aria-expanded="false"><span class="q">Can it help with scams?</span><span class="a">Yes. Max, the security agent, watches for scams.</span><span class="tog"><svg class="ico"><use href="#i-plus"/></svg></span></div>
+  <div class="faq" role="button" tabindex="0" aria-expanded="false"><span class="q">What if I get stuck?</span><span class="a">Ask your agents. They can teach you, step by step.</span><span class="tog"><svg class="ico"><use href="#i-plus"/></svg></span></div>
  </div>
 </section>
 
@@ -2887,7 +2887,9 @@ var qrcode = function() {
 
   // ---- FAQ: tap to reveal the answer in place ----
   document.querySelectorAll('.faq').forEach(function(b){
-    b.addEventListener('click', function(){ var o = b.classList.toggle('open'); b.setAttribute('aria-expanded', o ? 'true' : 'false'); });
+    function t(){ var o = b.classList.toggle('open'); b.setAttribute('aria-expanded', o ? 'true' : 'false'); }
+    b.addEventListener('click', t);
+    b.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); e.stopPropagation(); t(); } });
   });
 
   // ---- sign-up form (no backend: saved in this browser's localStorage) ----
